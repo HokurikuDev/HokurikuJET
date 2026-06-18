@@ -1,0 +1,171 @@
+/* ============================================================================
+   admin.css — Modal/form/toast primitives (same contract as HokuSpot's
+   own modal.css, since the same admin pattern applies here), plus the
+   admin pill in the header and the edit-list UI used on each content
+   page when signed in as a moderator/admin.
+   ============================================================================ */
+
+.admin-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: rgba(247, 243, 234, 0.14);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--paper);
+}
+.admin-pill__badge {
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+#modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+}
+#modal-root.is-open { display: block; }
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 37, 48, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  width: min(480px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-float);
+}
+.modal--wide { width: min(680px, 100%); }
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--mist);
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+}
+.modal__header h2 { font-size: 1.15rem; }
+.modal__close {
+  border: none;
+  background: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--ink-soft);
+}
+.modal__close:hover { color: var(--ink); }
+
+.modal__body { padding: var(--space-5); }
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.stack[hidden] {
+  display: none;
+}
+.stack label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.stack input, .stack select, .stack textarea {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink);
+  padding: var(--space-2) var(--space-3);
+  border: 1.5px solid var(--mist);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  resize: vertical;
+}
+.stack input:focus, .stack select:focus, .stack textarea:focus {
+  border-color: var(--moss);
+}
+
+.form-error {
+  color: var(--error);
+  font-size: 0.85rem;
+  background: rgba(162, 59, 46, 0.08);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  margin: 0;
+}
+.form-hint {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+#toast-root {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+}
+.toast {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-3) var(--space-5);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  box-shadow: var(--shadow-float);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+.toast.is-visible { opacity: 1; transform: translateY(0); }
+.toast--error { background: var(--error); }
+
+/* ---------------------------------------------------------------------
+   Admin edit toolbar + list — shown at the top of a content page
+   (Events/Resources/People/Guides) only when signed in as a
+   moderator/admin.
+   --------------------------------------------------------------------- */
+.admin-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--space-4);
+}
+
+.admin-row-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex: 0 0 auto;
+}
+
+.editable-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}

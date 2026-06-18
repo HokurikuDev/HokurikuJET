@@ -1,0 +1,214 @@
+/* ============================================================================
+   home.css — Homepage-specific components: rotating featured place card,
+   upcoming events list, latest post preview.
+   ============================================================================ */
+
+.home-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* ---------------------------------------------------------------------
+   Featured place card — pulled at random from HokuSpot's public
+   featured_places view. Styled to echo HokuSpot's own place detail card
+   (paper surface, category chip, dotted contour rule under the title)
+   so it reads as "a window into the other app" rather than a foreign
+   component bolted on.
+   --------------------------------------------------------------------- */
+.featured-place-card {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--mist);
+}
+.featured-place-card__image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--paper-dim);
+}
+.featured-place-card__image--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+.featured-place-card__body {
+  padding: var(--space-5);
+}
+.featured-place-card__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-2);
+}
+.featured-place-card__category {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--moss-tint);
+  color: var(--moss-deep);
+}
+.featured-place-card h3 {
+  font-size: 1.3rem;
+  position: relative;
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.featured-place-card h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  border-bottom: 2px dotted var(--gold);
+}
+.featured-place-card p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin: 0 0 var(--space-4);
+}
+.featured-place-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.featured-place-card__refresh {
+  background: transparent;
+  border: none;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  padding: 0;
+}
+.featured-place-card--loading,
+.featured-place-card--empty {
+  padding: var(--space-6) var(--space-5);
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------------------
+   Upcoming events list — simplified from the WordPress markup's full
+   calendar grid into a scannable list, per the chosen v1 scope. Each
+   row gets a colored dot from jet_event_categories rather than a
+   hardcoded legend, so new categories don't require a code change.
+   --------------------------------------------------------------------- */
+.events-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.event-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-sm);
+}
+.event-row__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex: 0 0 auto;
+}
+.event-row__date {
+  flex: 0 0 auto;
+  width: 52px;
+  text-align: center;
+  font-family: var(--font-display);
+}
+.event-row__date-day {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.event-row__date-month {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+.event-row__info { flex: 1; min-width: 0; }
+.event-row__title { font-weight: 700; margin: 0; }
+.event-row__meta {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+}
+.event-row__category-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.event-row__actions {
+  flex: 0 0 auto;
+  display: flex;
+  gap: var(--space-2);
+  align-self: center;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+.legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.legend__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+/* ---------------------------------------------------------------------
+   Latest post preview
+   --------------------------------------------------------------------- */
+.post-preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.post-preview__image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--paper-dim);
+}
+.post-preview__meta {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+.post-preview__body {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+}
+
+@media (max-width: 860px) {
+  .home-grid { grid-template-columns: 1fr; }
+}

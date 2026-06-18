@@ -1,0 +1,291 @@
+/* ============================================================================
+   layout.css — Page structure, header, hero, and shared section/card
+   patterns for the Hokuriku JETs resource site.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------
+   Header / nav
+   --------------------------------------------------------------------- */
+#site-header {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.header-bar {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  gap: var(--space-4);
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--paper);
+}
+.brand__mark {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.brand__sub {
+  font-size: 0.78rem;
+  color: rgba(247, 243, 234, 0.7);
+  letter-spacing: 0.04em;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.main-nav a {
+  color: rgba(247, 243, 234, 0.85);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: var(--space-2) 0;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.main-nav a:hover,
+.main-nav a.is-active {
+  color: var(--paper);
+  border-bottom-color: var(--gold);
+}
+
+#admin-area {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--paper);
+  font-size: 1.4rem;
+  padding: var(--space-2);
+}
+
+/* ---------------------------------------------------------------------
+   Buttons — same component contract as HokuSpot's (.btn, .btn--accent,
+   etc.) so the two codebases stay easy to cross-reference, with an
+   added .btn--ghost-on-light for use on paper backgrounds, since this
+   site is mostly paper rather than mostly map-chrome.
+   --------------------------------------------------------------------- */
+.btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: transform var(--transition-fast), background var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn--accent { background: var(--moss); color: var(--paper); }
+.btn--accent:hover { background: var(--moss-deep); }
+
+.btn--ghost { background: rgba(247, 243, 234, 0.14); color: var(--paper); }
+.btn--ghost:hover { background: rgba(247, 243, 234, 0.24); }
+
+.btn--ghost-on-light { background: var(--paper-dim); color: var(--ink); }
+.btn--ghost-on-light:hover { background: var(--mist); }
+
+.btn--danger { background: transparent; color: var(--error); border: 1.5px solid var(--error); }
+
+.btn--small { padding: var(--space-1) var(--space-3); font-size: 0.8rem; }
+.btn--block { width: 100%; justify-content: center; }
+
+/* ---------------------------------------------------------------------
+   Hero
+   --------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  background: linear-gradient(160deg, var(--ink) 0%, #2A3A4A 100%);
+  color: var(--paper);
+  overflow: hidden;
+}
+.hero__inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-9) var(--space-5) var(--space-7);
+  position: relative;
+  z-index: 1;
+}
+.hero__eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin: 0 0 var(--space-3);
+}
+.hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  max-width: 720px;
+}
+.hero p {
+  margin-top: var(--space-4);
+  max-width: 560px;
+  color: rgba(247, 243, 234, 0.85);
+  font-size: 1.05rem;
+}
+.hero__actions {
+  margin-top: var(--space-6);
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Smaller hero for sub-pages (About/People/Resources/Events/Guides) —
+   the full-height hero is reserved for the homepage. */
+.hero--compact .hero__inner {
+  padding: var(--space-7) var(--space-5) var(--space-6);
+}
+.hero--compact h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+
+/* Shown only once admin.js confirms a moderator/admin session — see
+   the 'admin-state-changed' event listener pattern used on each page.
+   Hidden by default via the [hidden] attribute in markup; toggled by JS. */
+.admin-only[hidden] { display: none; }
+
+/* Subtle topographic-line motif in the hero background, echoing
+   HokuSpot's dotted contour-line rule under place titles — a shared
+   visual signature between the two sites rather than a literal logo. */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    115deg,
+    rgba(247, 243, 234, 0.05) 0px,
+    rgba(247, 243, 234, 0.05) 1px,
+    transparent 1px,
+    transparent 64px
+  );
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------
+   Page sections
+   --------------------------------------------------------------------- */
+.section {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5);
+}
+.section--alt { background: var(--moss-tint); }
+.section--alt > .section { padding-left: 0; padding-right: 0; }
+
+.section__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+.section__header h2 {
+  font-size: 1.5rem;
+  position: relative;
+  padding-bottom: var(--space-2);
+}
+/* The dotted contour-line rule — HokuSpot's signature detail under place
+   titles, reused here under section headings for the same reason: it's
+   the one purely decorative motif that ties the two sites together. */
+.section__header h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 56px;
+  height: 0;
+  border-bottom: 2px dotted var(--gold);
+}
+.section__link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--moss-deep);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.section__link:hover { text-decoration: underline; }
+
+.empty-state {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  padding: var(--space-4) 0;
+}
+
+.about-content {
+  max-width: 680px;
+}
+.about-content h2 {
+  font-size: 1.2rem;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+}
+.about-content p { margin: 0 0 var(--space-4); color: var(--ink-soft); }
+
+/* ---------------------------------------------------------------------
+   Cards (generic — used for posts, guides, resources)
+   --------------------------------------------------------------------- */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ---------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------- */
+#site-footer {
+  background: var(--ink);
+  color: rgba(247, 243, 234, 0.7);
+  padding: var(--space-6) var(--space-5);
+  text-align: center;
+  font-size: 0.85rem;
+}
+#site-footer a { color: rgba(247, 243, 234, 0.9); }
+
+/* ---------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .main-nav { display: none; }
+  .nav-toggle { display: inline-flex; }
+  .main-nav.is-open {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--ink);
+    padding: var(--space-4) var(--space-5);
+    gap: var(--space-3);
+    z-index: 30;
+  }
+  .hero__inner { padding: var(--space-7) var(--space-4) var(--space-6); }
+  .section { padding: var(--space-6) var(--space-4); }
+}

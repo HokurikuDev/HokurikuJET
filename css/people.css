@@ -1,0 +1,50 @@
+/* ============================================================================
+   people.css — Staff/contact directory cards.
+   ============================================================================ */
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.person-card {
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  text-align: center;
+}
+.person-card__photo {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto var(--space-3);
+  background: var(--paper-dim);
+  display: block;
+}
+.person-card__photo--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--moss-deep);
+  background: var(--moss-tint);
+}
+.person-card h3 { font-size: 1rem; margin-bottom: 2px; }
+.person-card__role {
+  font-size: 0.85rem;
+  color: var(--moss-deep);
+  font-weight: 600;
+  margin: 0 0 var(--space-1);
+}
+.person-card__region {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin: 0 0 var(--space-2);
+}
+.person-card__email {
+  font-size: 0.82rem;
+}

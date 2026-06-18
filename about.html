@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Hokuriku JETs</title>
+  <meta name="description" content="About the Hokuriku JETs resource site." />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <header id="site-header">
+    <div class="header-bar">
+      <a href="index.html" class="brand">
+        <span class="brand__mark">Hokuriku JETs</span>
+        <span class="brand__sub">Ishikawa &amp; Toyama</span>
+      </a>
+      <button class="nav-toggle" id="btn-nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav>
+        <ul class="main-nav" id="main-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="is-active">About</a></li>
+          <li><a href="people.html">People</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="guides.html">Guides</a></li>
+        </ul>
+      </nav>
+      <div id="admin-area"></div>
+    </div>
+  </header>
+
+  <section class="hero hero--compact">
+    <div class="hero__inner">
+      <p class="hero__eyebrow">About</p>
+      <h1>Built by JETs, for JETs</h1>
+    </div>
+  </section>
+
+  <main>
+    <section class="section about-content">
+      <p>
+        Hokuriku JETs is a community resource site for JET Programme
+        participants living and working across Ishikawa and Toyama
+        Prefecture. It collects the practical stuff — events, resources,
+        people to contact, and how-to guides — in one place that's easy
+        to update and easy to find things on.
+      </p>
+      <p>
+        <!-- Placeholder copy — replace with the real history/mission
+             text once available. Structure is in place; content can be
+             filled in without any code changes. -->
+        This site grew out of a shared WordPress page maintained by the
+        Hokuriku JET community, rebuilt here to be easier to maintain and
+        to match the visual style of
+        <a href="https://github.com/HokurikuDev/HokuSpot" target="_blank" rel="noopener">HokuSpot</a>,
+        the companion community map of interesting places across the
+        same two prefectures.
+      </p>
+      <h2>Get in touch</h2>
+      <p>
+        Have something to add, fix, or ask about? Reach out at
+        <a href="mailto:ishikawaresources@gmail.com">ishikawaresources@gmail.com</a>.
+      </p>
+      <h2>For site admins</h2>
+      <p class="form-hint">
+        Editing events, resources, people, or guides requires signing in
+        with a HokuSpot moderator/admin account — use the "Admin sign in"
+        button in the top right of any page. There's no separate account
+        system for this site.
+      </p>
+    </section>
+  </main>
+
+  <footer id="site-footer">
+    <p>Hokuriku JETs &middot; A community resource for JET Programme participants in Ishikawa &amp; Toyama &middot; <a href="about.html">About this site</a></p>
+  </footer>
+
+  <div id="toast-root"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/ui-helpers.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

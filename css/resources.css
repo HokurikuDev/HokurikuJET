@@ -1,0 +1,53 @@
+/* ============================================================================
+   resources.css — Categorized resource link list.
+   ============================================================================ */
+
+.resource-category {
+  margin-bottom: var(--space-7);
+}
+.resource-category h2 {
+  font-size: 1.2rem;
+  position: relative;
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.resource-category h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  border-bottom: 2px dotted var(--gold);
+}
+
+.resource-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.resource-row {
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.resource-row__info { flex: 1; min-width: 0; }
+.resource-row__title {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ink);
+}
+.resource-row__title:hover { color: var(--moss-deep); }
+.resource-row__desc {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin: var(--space-1) 0 0;
+}

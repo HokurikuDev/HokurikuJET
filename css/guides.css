@@ -1,0 +1,59 @@
+/* ============================================================================
+   guides.css — Evergreen how-to guides, expandable inline rather than
+   linking to separate pages (keeps this a single static page per content
+   type, consistent with the rest of the site's simple navigation).
+   ============================================================================ */
+
+.guides-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.guide-card {
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+.guide-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+.guide-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-1);
+}
+.guide-card__summary {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.guide-card__toggle {
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--moss-deep);
+  transition: transform var(--transition-fast);
+}
+.guide-card.is-open .guide-card__toggle { transform: rotate(180deg); }
+
+.guide-card__body {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--mist);
+  white-space: pre-wrap;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.guide-card__body[hidden] { display: none; }
+
+.guide-card__actions {
+  margin-top: var(--space-4);
+  display: flex;
+  gap: var(--space-2);
+}
