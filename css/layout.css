@@ -120,6 +120,21 @@
   color: var(--paper);
   overflow: hidden;
 }
+/* Homepage hero only (not .hero--compact on sub-pages) gets the photo —
+   a busy photo behind the shorter sub-page headers would compete with
+   those pages' simpler treatment. Layered as two backgrounds: a dark
+   gradient (kept as the base so text stays legible even if the image is
+   slow to load or fails) plus the photo itself, blended together via
+   background-blend-mode rather than a separate overlay element, so the
+   gradient darkens the image instead of just sitting in front of it. */
+.hero:not(.hero--compact) {
+  background-image:
+    linear-gradient(165deg, rgba(28, 37, 48, 0.88) 0%, rgba(28, 37, 48, 0.72) 50%, rgba(28, 37, 48, 0.9) 100%),
+    url('../images/hero-kanazawa-station.jpg');
+  background-size: cover;
+  background-position: center 65%;
+  background-blend-mode: multiply;
+}
 .hero__inner {
   max-width: var(--content-width);
   margin: 0 auto;

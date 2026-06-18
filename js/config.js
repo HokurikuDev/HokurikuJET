@@ -23,7 +23,7 @@ const CONFIG = {
   // Public HokuSpot URL the featured-place card links out to (the
   // "see it on the map" link). Update this once HokuSpot's real GitHub
   // Pages URL is known — a placeholder for now.
-  HOKUSPOT_URL: 'https://example.github.io/hokuspot/',
+  HOKUSPOT_URL: 'https://hokurikudev.github.io/HokuSpot/',
 };
 
 Object.freeze(CONFIG);
