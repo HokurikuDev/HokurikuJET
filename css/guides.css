@@ -46,11 +46,46 @@
   margin-top: var(--space-4);
   padding-top: var(--space-4);
   border-top: 1px solid var(--mist);
-  white-space: pre-wrap;
   font-size: 0.95rem;
   color: var(--ink);
 }
 .guide-card__body[hidden] { display: none; }
+
+/* Typography for rendered markdown content (headings, lists, links, bold,
+   code) — body_html is real HTML now rather than escaped plain text, so
+   it needs actual child-element styling instead of relying on
+   white-space: pre-wrap to fake line breaks. */
+.guide-card__body p { margin: 0 0 var(--space-3) 0; line-height: 1.6; }
+.guide-card__body p:last-child { margin-bottom: 0; }
+.guide-card__body h1,
+.guide-card__body h2,
+.guide-card__body h3 {
+  margin: var(--space-4) 0 var(--space-2) 0;
+}
+.guide-card__body h1:first-child,
+.guide-card__body h2:first-child,
+.guide-card__body h3:first-child {
+  margin-top: 0;
+}
+.guide-card__body ul,
+.guide-card__body ol {
+  margin: 0 0 var(--space-3) 0;
+  padding-left: var(--space-5);
+}
+.guide-card__body li { margin-bottom: var(--space-1); }
+.guide-card__body a { color: var(--moss-deep); text-decoration: underline; }
+.guide-card__body code {
+  background: var(--paper-dim);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+  font-size: 0.9em;
+}
+.guide-card__body blockquote {
+  margin: 0 0 var(--space-3) 0;
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--mist);
+  color: var(--ink-soft);
+}
 
 .guide-card__actions {
   margin-top: var(--space-4);

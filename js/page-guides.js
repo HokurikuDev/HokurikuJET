@@ -7,6 +7,17 @@ let allGuides = [];
 document.addEventListener('DOMContentLoaded', loadGuides);
 document.addEventListener('admin-state-changed', renderGuides);
 
+// Renders markdown source to sanitized HTML for storage in body_html.
+// Sanitizing even though only trusted admins can write guides right now —
+// defense in depth against a compromised admin account or this feature
+// later opening up to other contributors, rather than trusting marked's
+// raw output (which deliberately passes through inline HTML found in the
+// markdown source, including <script> tags, unless something strips it).
+function renderGuideMarkdown(markdownText) {
+  const rawHtml = marked.parse(markdownText || '');
+  return DOMPurify.sanitize(rawHtml);
+}
+
 async function loadGuides() {
   const root = $('#guides-list');
   try {
@@ -36,7 +47,7 @@ function renderGuides() {
         </div>
         <button class="guide-card__toggle" aria-label="Expand">&#9662;</button>
       </div>
-      <div class="guide-card__body" hidden>${escapeHtml(g.body)}</div>
+      <div class="guide-card__body" hidden>${g.body_html || escapeHtml(g.body)}</div>
       <div class="guide-card__actions admin-only" hidden>
         <button class="btn btn--ghost-on-light btn--small" data-action="edit">Edit</button>
         <button class="btn btn--danger btn--small" data-action="delete">Delete</button>
@@ -85,7 +96,7 @@ function openGuideForm(guide = null) {
     <form id="form-guide" class="stack">
       <label>Title <input type="text" name="title" required value="${escapeHtml(guide?.title || '')}" /></label>
       <label>Summary (shown collapsed, before expanding) <input type="text" name="summary" value="${escapeHtml(guide?.summary || '')}" /></label>
-      <label>Full guide text <textarea name="body" rows="8" required>${escapeHtml(guide?.body || '')}</textarea></label>
+      <label>Full guide text (Markdown supported — **bold**, # headings, - lists, [links](url)) <textarea name="body" rows="8" required>${escapeHtml(guide?.body || '')}</textarea></label>
       <label>Sort order <input type="number" name="sortOrder" value="${guide?.sort_order ?? 0}" /></label>
       <p class="form-error" id="guide-form-error" hidden></p>
       <button type="submit" class="btn btn--accent btn--block">${isEdit ? 'Save changes' : 'Add guide'}</button>
@@ -101,6 +112,7 @@ function openGuideForm(guide = null) {
       title: fd.get('title'),
       summary: fd.get('summary') || null,
       body: fd.get('body'),
+      bodyHtml: renderGuideMarkdown(fd.get('body')),
       sortOrder: parseInt(fd.get('sortOrder'), 10) || 0,
     };
     try {

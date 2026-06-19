@@ -297,6 +297,7 @@ const Api = {
       title: guide.title,
       summary: guide.summary || null,
       body: guide.body,
+      body_html: guide.bodyHtml,
       sort_order: guide.sortOrder || 0,
       created_by: session.user.id,
     });
@@ -308,6 +309,7 @@ const Api = {
       title: guide.title,
       summary: guide.summary || null,
       body: guide.body,
+      body_html: guide.bodyHtml,
       sort_order: guide.sortOrder || 0,
     }).eq('id', id);
     if (error) throw error;
