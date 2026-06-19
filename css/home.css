@@ -207,6 +207,21 @@
 .post-preview__body {
   color: var(--ink-soft);
   font-size: 0.94rem;
+  white-space: pre-wrap;
+}
+.post-preview__toggle {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.86rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.post-preview__toggle:hover {
+  opacity: 0.75;
 }
 .draft-badge {
   display: inline-block;

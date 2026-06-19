@@ -147,11 +147,16 @@ async function loadLatestPost() {
   }
 }
 
+const POST_PREVIEW_TRUNCATE_LEN = 280;
+
 function renderLatestPost(root, post) {
   if (!post) {
     root.innerHTML = `<p class="empty-state">No updates posted yet.</p>`;
     return;
   }
+
+  const isLong = !!post.body && post.body.length > POST_PREVIEW_TRUNCATE_LEN;
+  const bodyText = isLong ? truncate(post.body, POST_PREVIEW_TRUNCATE_LEN) : (post.body || '');
 
   root.innerHTML = `
     <div class="post-preview">
@@ -159,7 +164,8 @@ function renderLatestPost(root, post) {
       ${!post.published ? `<span class="draft-badge">Draft — not visible to visitors yet</span>` : ''}
       <h3>${escapeHtml(post.title)}</h3>
       <p class="post-preview__meta">${formatPostDate(post.created_at)}</p>
-      <p class="post-preview__body">${escapeHtml(truncate(post.body, 280))}</p>
+      <p class="post-preview__body" id="post-preview-body">${escapeHtml(bodyText)}</p>
+      ${isLong ? `<button class="post-preview__toggle" id="btn-toggle-post-body" type="button" aria-expanded="false">Read more</button>` : ''}
       <div class="admin-only" hidden>
         <button class="btn btn--ghost-on-light btn--small" id="btn-edit-post">Edit this update</button>
       </div>
@@ -168,6 +174,18 @@ function renderLatestPost(root, post) {
 
   refreshAdminOnlyVisibility();
   $('#btn-edit-post')?.addEventListener('click', () => openPostForm(post));
+
+  if (isLong) {
+    const toggleBtn = $('#btn-toggle-post-body');
+    const bodyEl = $('#post-preview-body');
+    let expanded = false;
+    toggleBtn.addEventListener('click', () => {
+      expanded = !expanded;
+      bodyEl.textContent = expanded ? post.body : truncate(post.body, POST_PREVIEW_TRUNCATE_LEN);
+      toggleBtn.textContent = expanded ? 'Show less' : 'Read more';
+      toggleBtn.setAttribute('aria-expanded', String(expanded));
+    });
+  }
 }
 
 function truncate(str, maxLen) {
