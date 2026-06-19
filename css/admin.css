@@ -107,6 +107,22 @@
   border-color: var(--moss);
 }
 
+/* Override for a checkbox + its label text — .stack label defaults to
+   a vertical layout (label text above the input), which is right for
+   text/select/textarea fields but wrong for a checkbox, where the box
+   and its description should sit side by side. */
+.stack label.checkbox-row {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 400;
+  color: var(--ink);
+}
+.stack label.checkbox-row input[type="checkbox"] {
+  width: auto;
+  flex: 0 0 auto;
+}
+
 .form-error {
   color: var(--error);
   font-size: 0.85rem;

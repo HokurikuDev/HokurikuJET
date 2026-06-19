@@ -208,6 +208,18 @@
   color: var(--ink-soft);
   font-size: 0.94rem;
 }
+.draft-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 2px 9px;
+  border-radius: 999px;
+  width: fit-content;
+}
 
 @media (max-width: 860px) {
   .home-grid { grid-template-columns: 1fr; }

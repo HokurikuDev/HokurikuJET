@@ -10,7 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
   loadFeaturedPlace();
   loadUpcomingEvents();
   loadLatestPost();
+  $('#btn-add-post')?.addEventListener('click', () => openPostForm());
 });
+
+// A signed-in moderator sees drafts (see loadLatestPost above), so the
+// admin state changing — signing in or out — has to re-fetch, not just
+// re-render, unlike the simpler admin-only-visibility toggle used on
+// the other content pages.
+document.addEventListener('admin-state-changed', loadLatestPost);
 
 async function loadFeaturedPlace() {
   const root = $('#featured-place-card');
@@ -116,13 +123,25 @@ function renderEventsList(root, events, catMap) {
   }).join('');
 }
 
+let currentLatestPost = null;
+
 async function loadLatestPost() {
   const root = $('#latest-post-preview');
   if (!root) return;
 
   try {
-    const post = await Api.getLatestPublishedPost();
-    renderLatestPost(root, post);
+    // A signed-in moderator/admin should see the latest post regardless
+    // of published state (so a draft-in-progress shows up for them to
+    // keep editing), since RLS already grants them that visibility via
+    // getAllPosts(). Everyone else only ever sees the latest PUBLISHED
+    // post, via getLatestPublishedPost().
+    if (typeof Admin !== 'undefined' && Admin.isAdmin()) {
+      const posts = await Api.getAllPosts();
+      currentLatestPost = posts && posts.length > 0 ? posts[0] : null;
+    } else {
+      currentLatestPost = await Api.getLatestPublishedPost();
+    }
+    renderLatestPost(root, currentLatestPost);
   } catch (err) {
     root.innerHTML = `<p class="empty-state">Couldn't load the latest update right now.</p>`;
   }
@@ -137,14 +156,65 @@ function renderLatestPost(root, post) {
   root.innerHTML = `
     <div class="post-preview">
       ${post.cover_image_url ? `<img class="post-preview__image" src="${escapeHtml(post.cover_image_url)}" alt="" />` : ''}
+      ${!post.published ? `<span class="draft-badge">Draft — not visible to visitors yet</span>` : ''}
       <h3>${escapeHtml(post.title)}</h3>
       <p class="post-preview__meta">${formatPostDate(post.created_at)}</p>
       <p class="post-preview__body">${escapeHtml(truncate(post.body, 280))}</p>
+      <div class="admin-only" hidden>
+        <button class="btn btn--ghost-on-light btn--small" id="btn-edit-post">Edit this update</button>
+      </div>
     </div>
   `;
+
+  refreshAdminOnlyVisibility();
+  $('#btn-edit-post')?.addEventListener('click', () => openPostForm(post));
 }
 
 function truncate(str, maxLen) {
   if (!str || str.length <= maxLen) return str || '';
   return str.slice(0, maxLen).trim() + '…';
+}
+
+function openPostForm(post = null) {
+  const isEdit = !!post;
+  openModal(`
+    <form id="form-post" class="stack">
+      <label>Title <input type="text" name="title" required value="${escapeHtml(post?.title || '')}" /></label>
+      <label>Body <textarea name="body" rows="8" required>${escapeHtml(post?.body || '')}</textarea></label>
+      <label>Cover image URL (optional) <input type="url" name="coverImageUrl" value="${escapeHtml(post?.cover_image_url || '')}" /></label>
+      <label class="checkbox-row">
+        <input type="checkbox" name="published" ${post?.published ? 'checked' : ''} />
+        Published (visible to visitors — leave unchecked to save as a draft)
+      </label>
+      <p class="form-error" id="post-form-error" hidden></p>
+      <button type="submit" class="btn btn--accent btn--block">${isEdit ? 'Save changes' : 'Add update'}</button>
+    </form>
+  `, isEdit ? 'Edit update' : 'Add update');
+
+  $('#form-post').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const errEl = $('#post-form-error');
+    errEl.hidden = true;
+    const payload = {
+      title: fd.get('title'),
+      body: fd.get('body'),
+      coverImageUrl: fd.get('coverImageUrl') || null,
+      published: fd.get('published') === 'on',
+    };
+    try {
+      if (isEdit) {
+        await Api.updatePost(post.id, payload);
+        showToast('Saved.');
+      } else {
+        await Api.createPost(payload);
+        showToast('Added.');
+      }
+      closeModal();
+      await loadLatestPost();
+    } catch (err) {
+      errEl.textContent = err.message;
+      errEl.hidden = false;
+    }
+  });
 }
