@@ -317,3 +317,51 @@
   .hero__inner { padding: var(--space-7) var(--space-4) var(--space-6); }
   .section { padding: var(--space-6) var(--space-4); }
 }
+
+/* ---------------------------------------------------------------------
+   Sub-page hero photos — About/People/Resources/Events/Guides each get
+   their own background photo on the compact hero, using the same
+   gradient-plus-photo technique as the homepage hero above. Kept as
+   separate page-specific classes (rather than reusing
+   .hero:not(.hero--compact)) so each page's image is independently
+   swappable without affecting the others.
+   --------------------------------------------------------------------- */
+.hero--compact.hero--about,
+.hero--compact.hero--people,
+.hero--compact.hero--resources,
+.hero--compact.hero--events,
+.hero--compact.hero--guides {
+  background-size: cover;
+  background-position: center 60%;
+  background-blend-mode: multiply;
+}
+
+.hero--compact.hero--about {
+  background-image:
+    linear-gradient(165deg, rgba(28, 37, 48, 0.88) 0%, rgba(28, 37, 48, 0.72) 50%, rgba(28, 37, 48, 0.9) 100%),
+    url('../images/hero-about.jpg');
+}
+
+.hero--compact.hero--people {
+  background-image:
+    linear-gradient(165deg, rgba(28, 37, 48, 0.88) 0%, rgba(28, 37, 48, 0.72) 50%, rgba(28, 37, 48, 0.9) 100%),
+    url('../images/hero-people.jpg');
+}
+
+.hero--compact.hero--resources {
+  background-image:
+    linear-gradient(165deg, rgba(28, 37, 48, 0.88) 0%, rgba(28, 37, 48, 0.72) 50%, rgba(28, 37, 48, 0.9) 100%),
+    url('../images/hero-resources.jpg');
+}
+
+.hero--compact.hero--events {
+  background-image:
+    linear-gradient(165deg, rgba(28, 37, 48, 0.88) 0%, rgba(28, 37, 48, 0.72) 50%, rgba(28, 37, 48, 0.9) 100%),
+    url('../images/hero-events.jpg');
+}
+
+.hero--compact.hero--guides {
+  background-image:
+    linear-gradient(165deg, rgba(28, 37, 48, 0.88) 0%, rgba(28, 37, 48, 0.72) 50%, rgba(28, 37, 48, 0.9) 100%),
+    url('../images/hero-guides.jpg');
+}
