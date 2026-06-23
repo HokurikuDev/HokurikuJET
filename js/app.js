@@ -29,6 +29,11 @@ async function loadFeaturedPlace() {
     const place = await Api.getRandomFeaturedPlace();
     renderFeaturedPlace(place);
   } catch (err) {
+    // Logged so the real cause (network/CORS, RLS rejection, etc.) shows
+    // up in the console instead of only ever seeing the generic empty
+    // state — this was previously swallowed silently, which made the
+    // "works after a refresh" symptom impossible to diagnose from the UI.
+    console.error('loadFeaturedPlace failed:', err);
     root.innerHTML = `<div class="featured-place-card featured-place-card--empty">Couldn't load a featured place right now.</div>`;
   }
 }
@@ -91,6 +96,8 @@ async function loadUpcomingEvents() {
     const catMap = new Map(categories.map((c) => [c.id, c]));
     renderEventsList(root, events, catMap);
   } catch (err) {
+    // See note in loadFeaturedPlace's catch above — same reasoning.
+    console.error('loadUpcomingEvents failed:', err);
     root.innerHTML = `<li class="empty-state">Couldn't load events right now.</li>`;
   }
 }
@@ -143,6 +150,7 @@ async function loadLatestPost() {
     }
     renderLatestPost(root, currentLatestPost);
   } catch (err) {
+    console.error('loadLatestPost failed:', err);
     root.innerHTML = `<p class="empty-state">Couldn't load the latest update right now.</p>`;
   }
 }

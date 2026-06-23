@@ -82,6 +82,12 @@
    etc.) so the two codebases stay easy to cross-reference, with an
    added .btn--ghost-on-light for use on paper backgrounds, since this
    site is mostly paper rather than mostly map-chrome.
+
+   NOTE: .btn is sometimes rendered as an <a> (e.g. the hero CTAs on the
+   homepage). tokens.css sets a global `a { color: ... }` rule but never
+   resets text-decoration, so anchor-based buttons were inheriting the
+   browser's default underline. text-decoration: none below fixes that
+   for every button regardless of whether it's a <button> or <a>.
    --------------------------------------------------------------------- */
 .btn {
   border: none;
@@ -89,6 +95,7 @@
   padding: var(--space-2) var(--space-4);
   font-size: 0.88rem;
   font-weight: 600;
+  text-decoration: none;
   transition: transform var(--transition-fast), background var(--transition-fast);
   display: inline-flex;
   align-items: center;
@@ -204,7 +211,13 @@
   margin: 0 auto;
   padding: var(--space-7) var(--space-5);
 }
-.section--alt { background: var(--moss-tint); }
+/* .section--alt previously used --moss-tint to set this block apart,
+   but as a sharp-edged, full-bleed band sitting between two plain
+   --paper sections, the color shift plus the hard edge read as a
+   layout mistake rather than an intentional accent. Blending it back
+   to --paper keeps "Latest update" feeling like part of the same page
+   instead of a clashing strip. */
+.section--alt { background: var(--paper); }
 .section--alt > .section { padding-left: 0; padding-right: 0; }
 
 .section__header {
